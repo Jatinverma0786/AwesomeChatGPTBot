@@ -11,7 +11,7 @@ import typing
 import requests
 
 
-def Emma_tts(message: str) -> typing.Union[bytes, typing.NoReturn]:
+def Raveena_tts(message: str) -> typing.Union[bytes, typing.NoReturn]:
     """
     Brian Text to speech
 
@@ -22,7 +22,7 @@ def Emma_tts(message: str) -> typing.Union[bytes, typing.NoReturn]:
         result (Union[bytes, None]): result or None in failure
     """
     # Base URL for provider API
-    url: str = "https://api.streamelements.com/kappa/v2/speech?voice=Emma&text={prompt}"
+    url: str = "https://api.streamelements.com/kappa/v2/speech?voice=Raveena&text={prompt}"
     
     # Request headers
     headers: typing.Dict[str, str] = {

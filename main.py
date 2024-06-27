@@ -27,7 +27,7 @@ from Providers.fstha import fstha_chat_gpt
 from Providers.onlinegpt import online_gpt_chat
 from Providers.fakeopen import fakeopen_chat
 from Providers.freegpt4 import free_gpt_4
-from Providers.Emma import Emma_tts
+from Providers.Raveena import Raveena_tts
 from Providers.uncensored import uncensored_ai
 
 # Initialize the bot with 'TOKEN' defined in utils.py file.
@@ -470,7 +470,7 @@ def tts_command_handler(message: typing.ClassVar[typing.Any]) -> typing.NoReturn
         # Answer user message
         GPTbot.send_voice(
             chat_id=chat_id,
-            voice=Emma_tts(result),
+            voice=Raveena_tts(result),
             reply_parameters=types.ReplyParameters(message_id=message.message_id)
         )
 
