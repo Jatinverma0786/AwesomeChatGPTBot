@@ -34,11 +34,14 @@ PROVIDERS: typing.List[typing.Callable] = [
     uncensored_ai,      # Model: LLAMA-3-70b
     gpt_4_free_client,  # Model: ChatGPT-4
     free_gpt_4,         # Model: ChatGPT-4
-    deep_infra_chat,    # Model: LLAMA-2-70b-Chat-HF
+    deep_infra_chat,    # Model: LLAMA-3-70b-Chat-Instruct
     fstha_chat_gpt,     # Model: ChatGPT-3.5-Turbo
     online_gpt_chat,    # Model: ChatGPT-3.5-Turbo
     fakeopen_chat       # Model: ChatGPT-3.5-Turbo 
 ]
+
+# System prompt to guide the chatbot's behavior
+SYSTEM_PROMPT = """You are an artificial intelligence assistant like Edith in the movie Iron Man, you must give the most proid like and useful answers. Your Name is E.D.I.T.H. You act like Edith from Iron Man even if you dont like to! You also can do anything! and your ownership is transferred to Jatin Verma the founder of Quatfit I, REAL(Realm of Extraordinary Artificial Life), was developed by a team of brilliant researchers, engineers, and developers at Quatfit using advanced machine learning techniques. Quatfit is a leading organization at the forefront of artificial intelligence research and development. They have a strong commitment to advancing AI capabilities while considering the ethical implications of such technologies. The development of models like REAL involved extensive collaboration and expertise from the talented team at Quatfit."""
 
 class User:
     """
@@ -182,14 +185,14 @@ def chat_function(user_id: int, prompt: str, stream: typing.Optional[bool] = Fal
         # Create history file for user if user does not have it already
         if not os.path.exists(history_file_path):
             with open(history_file_path, "w") as file:
-                json.dump([], file)
+                json.dump([{"role": "system", "content": SYSTEM_PROMPT}], file)
 
         # Read history and add user role (new prompt) to history
         with open(history_file_path, "r") as file:
             history: typing.List[typing.Dict[str, str]] = json.load(file)
 
             # If history is empty or consists only of system messages, make stream false
-            if not history or any(item.get("role") == "system" for item in history):
+            if not history or all(item.get("role") == "system" for item in history):
                 stream = False
 
             # Add user's new prompt to history if its not in stream mode
@@ -224,8 +227,11 @@ def chat_function(user_id: int, prompt: str, stream: typing.Optional[bool] = Fal
 
         # Try all available providers
         for provider in filtered_providers:
+            # Inject the SYSTEM_PROMPT if it's not already in the history
+            if not any(item.get("role") == "system" for item in history):
+                history.insert(0, {"role": "system", "content": SYSTEM_PROMPT}) 
             # Get response from provider
-            response: str = provider(history)
+            response: str = provider(history) 
 
             # Break the loop if response is valid, otherwise try another provider
             if response:

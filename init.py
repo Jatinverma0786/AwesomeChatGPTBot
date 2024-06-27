@@ -43,7 +43,7 @@ GPTbot.set_my_commands(
         ),
         types.BotCommand(
             command="tts",
-            description="Brian Text To Speech response"
+            description="Aditi Text To Speech response"
         ),
         types.BotCommand(
             command="history",

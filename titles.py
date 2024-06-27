@@ -6,7 +6,7 @@
 # User is new (/start):
 welcome_1: str = (
     "Hi {}\n\n"
-    "Welcome to ChatGPT bot!\n"
+    "Welcome to EDITH bot!\n"
     "Press /help if you need any help..."
 )
 # User already have account (/start):

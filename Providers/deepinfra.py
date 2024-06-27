@@ -48,7 +48,7 @@ def deep_infra_chat(messages: List[Dict[str, str]]) -> Union[str, NoReturn]:
     # Request data
     data: Dict[str, Any] = json.dumps(
         {
-        'model' : 'meta-llama/Llama-2-70b-chat-hf',
+        'model' : 'meta-llama/Meta-Llama-3-70B-Instruct',
         'messages': messages,
         'stream': False
         }, separators=(',', ':')
